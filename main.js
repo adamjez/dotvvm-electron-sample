@@ -79,7 +79,7 @@ function spawnWebServer(port) {
 
   var webAppFile = path.join(__dirname, '/webapp/bin/dist/webapp');
 
-  if(os.platform() == 'win32') {
+  if (os.platform() == 'win32') {
     webAppFile += '.exe';
   }
 
@@ -111,7 +111,7 @@ function spawnWebServer(port) {
 //Kill process when electron exits
 process.on('exit', function () {
   console.log('killing webApp');
-  if(webAppProcess) {
+  if (webAppProcess) {
     webAppProcess.kill();
     webAppProcess = null;
   }
@@ -139,7 +139,7 @@ function webSocketConnect(url) {
   });
 
   ws.on('open', function open() {
-    ws.send('Connection opened');
+    ws.send(JSON.stringify({ result: 'Connection opened', type: 'Event' }));
   });
 
   ws.on('close', function close(data) {
@@ -159,6 +159,17 @@ function webSocketConnect(url) {
       electronModule = electron[electronAction.module];
     }
 
-    electronModule[electronAction.method].apply(electronModule, electronAction.arguments);
+
+    var result = electronModule[electronAction.method].apply(electronModule, electronAction.arguments);
+
+    var response = {
+      type: "Response", 
+      actionId: electronAction.id,
+      result: result
+    };
+    
+    console.log('Sending: ' + JSON.stringify(response));
+
+    ws.send(JSON.stringify(response));
   });
 }

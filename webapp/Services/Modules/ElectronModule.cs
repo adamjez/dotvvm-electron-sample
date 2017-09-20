@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebApp.Helpers;
 
 namespace WebApp.Services.Modules
@@ -16,7 +17,7 @@ namespace WebApp.Services.Modules
             _handler = handler;
         }
 
-        protected async Task SendActionAsync([CallerMemberName] string methodName = null, params object[] arguments)
+        protected async Task<JToken> SendActionAsync([CallerMemberName] string methodName = null, params object[] arguments)
         {
             if (methodName == null)
             {
@@ -33,7 +34,8 @@ namespace WebApp.Services.Modules
                 Arguments = arguments
             };
 
-            await _handler.SendActionAsync(action);   
+            var response = await _handler.SendActionAsync(action);   
+            return response.Result;
         }
     }
 }

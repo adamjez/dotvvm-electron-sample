@@ -12,7 +12,6 @@
             "program": "${workspaceRoot}/main.js",
             "protocol": "legacy"
         },
-
         {
             "name": ".NET Core Attach",
             "type": "coreclr",

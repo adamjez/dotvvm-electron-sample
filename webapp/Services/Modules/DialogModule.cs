@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebApp.Services.Modules
@@ -8,10 +9,11 @@ namespace WebApp.Services.Modules
         {
         }
 
-        public async Task ShowOpenDialogAsync(ShowOpenDialogOptions options = null)
+        public async Task<IEnumerable<string>> ShowOpenDialogAsync(ShowOpenDialogOptions options = null)
         {
-            // new { Properties = new[] { "openFile", "openDirectory", "multiSelections" } }
-            await SendActionAsync(arguments: options);
+            var result = await SendActionAsync(arguments: options);
+
+            return result.ToObject<List<string>>();
         }
     }
 }

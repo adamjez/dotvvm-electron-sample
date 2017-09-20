@@ -32,7 +32,7 @@ namespace WebApp.ViewModels
                 Filters = new[] { new FileFilter { Name = "Image", Extensions = new[] { "jpg", "png", "gif" } } }
             };
 
-            await _electronService.Dialog.ShowOpenDialogAsync(options);
+            Title = string.Join(", ", await _electronService.Dialog.ShowOpenDialogAsync(options));
         }
 
         public async Task ClipBoardWriteText()
