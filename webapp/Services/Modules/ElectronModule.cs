@@ -33,7 +33,7 @@ namespace WebApp.Services.Modules
                 Arguments = arguments
             };
 
-            await _handler.SendActionAsync(action);
+            await _handler.SendActionAsync(action);   
         }
     }
 }
