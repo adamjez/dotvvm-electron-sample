@@ -13,7 +13,7 @@ namespace WebApp.Services.Modules
             await SendActionAsync(arguments: type);
         }
 
-        public async Task WriteText(string text, string type = null)
+        public async Task WriteTextAsync(string text, string type = null)
         {
             await SendActionAsync(arguments: new []{ text, type});
         }
