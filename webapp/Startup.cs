@@ -31,6 +31,7 @@ namespace WebApp
             });
             services.AddTransient<ElectronService>();
             services.AddTransient<DialogModule>();
+            services.AddTransient<ClipboardModule>();
             services.AddTransient<MainWindowModule>();
 
             services.AddTransient<DefaultViewModel>();
