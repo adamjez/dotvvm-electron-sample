@@ -35,6 +35,11 @@ namespace WebApp.ViewModels
             await _electronService.Dialog.ShowOpenDialogAsync(options);
         }
 
+        public async Task ClipBoardWriteText()
+        {
+            await _electronService.ClipBoard.WriteText("TEST");
+        }
+
         public async Task MinimizeWindow()
         {
             await _electronService.MainWindow.MinimizeAsync();
