@@ -34,9 +34,9 @@ namespace WebApp
             services.AddTransient<MainWindowModule>();
 
             services.AddTransient<DefaultViewModel>();
+
             services.AddSingleton<ElectronMessageHandler>();
             services.AddSingleton<WebSocketHandler, ElectronMessageHandler>(c => c.GetService<ElectronMessageHandler>());
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

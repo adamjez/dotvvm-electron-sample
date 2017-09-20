@@ -54,6 +54,6 @@ namespace WebApp.Services
             await SendMessageAsync(CurrentConnection, message);
         }
 
-        public abstract Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer);
+        public abstract Task ReceiveAsync(WebSocketReceiveResult result, byte[] buffer);
     }
 }
