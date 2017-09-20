@@ -6,30 +6,28 @@ namespace WebApp.Services
 {
     public static class WebSocketHandlerBuilder
     {
-        public static void UseWebSocketHandler(this IApplicationBuilder app)
+        public static void UseWebSocketHandler(this IApplicationBuilder app, string path)
         {
             var handler = app.ApplicationServices.GetService<WebSocketHandler>();
 
-            app.Use(async (context, next) =>
+            app.Map(path, (builder) =>
             {
-                if (context.Request.Path == "/ws")
-                {
-                    if (context.WebSockets.IsWebSocketRequest)
-                    {
-                        WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-                        await handler.Handle(webSocket);
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = 400;
-                    }
-                }
-                else
-                {
-                    await next();
-                }
+                builder.UseMiddleware<WebSocketManagerMiddleware>();
             });
         }
+
+        // private static void UseWebSocketMiddleware(this IApplicationBuilder app)
+        // {
+        //     if (context.WebSockets.IsWebSocketRequest)
+        //     {
+        //         WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+
+        //         await handler.Handle(webSocket);
+        //     }
+        //     else
+        //     {
+        //         context.Response.StatusCode = 400;
+        //     })
+        // }
     }
 }

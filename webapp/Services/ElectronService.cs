@@ -1,29 +1,18 @@
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace WebApp.Services
 {
     public class ElectronService
     {
-        private WebSocketHandler _handler;
-
-        public ElectronService(WebSocketHandler handler)
+        public ElectronService(DialogModule dialogModule, MainWindowModule mainWindowModule)
         {
-            _handler = handler;            
+            Dialog = dialogModule;
+            MainWindow = mainWindowModule;
         }
 
-        public async Task OpenDialog()
-        {
-            await _handler.Send("OpenDialog");
-        }
+        public DialogModule Dialog { get; set; }
 
-        public async Task MinimizeWindow()
-        {
-            await _handler.Send("Minimize");
-        }
-
-         public async Task CloseWindow()
-        {
-            await _handler.Send("Exit");
-        }
+        public MainWindowModule MainWindow { get; set; }
     }
 }

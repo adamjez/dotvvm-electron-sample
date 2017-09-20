@@ -1,62 +1,66 @@
 using System;
 using System.Net.WebSockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace WebApp.Services
 {
-    public class WebSocketHandler
+    public class ElectrontMessageHandler : WebSocketHandler
     {
-        private WebSocket _currentWebSocket;
-        private readonly ILogger<WebSocketHandler> _logger;
-
-        public WebSocketHandler(ILogger<WebSocketHandler> logger)
+        public override Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
         {
-            _logger = logger;
+            return Task.CompletedTask;
+        }
+    }
+
+    public abstract class WebSocketHandler
+    {
+        protected WebSocket CurrentConnection { get; set; }
+
+        public WebSocketHandler()
+        {
+            CurrentConnection = null;
         }
 
-        public async Task Handle(WebSocket webSocket)
+        public virtual Task OnConnected(WebSocket socket)
         {
-            _logger.LogError(webSocket.State.ToString());
-
-
-            if(webSocket.State == WebSocketState.Open)
-            {
-                _currentWebSocket = webSocket;
-            }
-            else
-            {
-                _currentWebSocket = null;
-            }
-
-            // var buffer = new byte[1024 * 4];
-            // WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-
-            // // await Send("Test");
-            var buffer = new byte[1024 * 4];
-            WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            while (!result.CloseStatus.HasValue)
-            {
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, CancellationToken.None);
-
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            }
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            CurrentConnection = socket;
+            return Task.CompletedTask;
         }
 
-        public async Task Send(string message)
+        public virtual Task OnDisconnected(WebSocket socket)
         {
-            if(_currentWebSocket == null || _currentWebSocket.State != WebSocketState.Open)
-            {
+            CurrentConnection = null;
+            return Task.CompletedTask;
+        }
+
+        public async Task SendMessageAsync(WebSocket socket, string message)
+        {
+            if(socket.State != WebSocketState.Open)
                 return;
+
+            await socket.SendAsync(buffer: new ArraySegment<byte>(array: Encoding.ASCII.GetBytes(message),
+                                                                  offset: 0, 
+                                                                  count: message.Length),
+                                   messageType: WebSocketMessageType.Text,
+                                   endOfMessage: true,
+                                   cancellationToken: CancellationToken.None);          
+        }
+
+        public async Task SendMessageAsync(string message)
+        {
+            if(CurrentConnection == null)
+            {
+                throw new Exception("Current Web Socket is closed");
             }
 
-            var encodedMessage = System.Text.Encoding.UTF8.GetBytes(message);
-            var buffer = new ArraySegment<byte>(encodedMessage, 0, encodedMessage.Length);
-            await _currentWebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+            await SendMessageAsync(CurrentConnection, message);
         }
+
+        public abstract Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer);
     }
 }

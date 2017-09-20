@@ -11,5 +11,15 @@
 
 	<h1>{{value: Title}}</h1>
 
+    <dot:Repeater DataSource="{value: Items}" WrapperTagName="ul">
+        <ItemTemplate>
+            <li>{{value: _this}}</li>
+        </ItemTemplate>
+    </dot:Repeater>
+
+    <dot:TextBox Text="{value: Item}" />
+    <dot:Button Text="Add Item" Click="{command: AddItem()}" />
+
+    <dot:RouteLink Text="Back" RouteName="Default" />
 </body>
 </html>

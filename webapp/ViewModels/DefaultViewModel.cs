@@ -24,17 +24,17 @@ namespace WebApp.ViewModels
 
         public async Task OpenDialogWindow()
         {
-            await _electronService.OpenDialog();
+            await _electronService.Dialog.ShowOpenDialogAsync();
         }
 
         public async Task MinimizeWindow()
         {
-            await _electronService.MinimizeWindow();
+            await _electronService.MainWindow.MinimizeAsync();
         }
 
         public async Task CloseWindow()
         {
-            await _electronService.CloseWindow();
+            await _electronService.MainWindow.CloseAsync();
         }
     }
 }

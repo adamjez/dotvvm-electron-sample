@@ -1,5 +1,5 @@
 const electron = require('electron')
-const {dialog} = require('electron')
+const { dialog } = require('electron')
 
 const os = require('os');
 
@@ -15,12 +15,12 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({ width: 800, height: 600 })
 
-   // and load the index.html of the app.
-   mainWindow.loadURL(url.format({
+  // and load the index.html of the app.
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
@@ -67,13 +67,13 @@ app.on('activate', function () {
 let webAppProcess;
 
 function startWebApp() {
-    var freeport = require('freeport');
-  
-    freeport(function (err, port) {
-      if (err) throw err      
-      console.log(port);
+  var freeport = require('freeport');
 
-      spawnWebServer(port);
+  freeport(function (err, port) {
+    if (err) throw err
+    console.log(port);
+
+    spawnWebServer(port);
   });
 }
 
@@ -83,22 +83,21 @@ function spawnWebServer(port) {
   var webAppFolder = path.join(__dirname, '/webapp/bin/dist/win/');
   var apipath = path.join(__dirname, '/webapp/bin/dist/win/webapp.exe')
   console.log(apipath);
-  webAppProcess = proc(apipath, 
+  webAppProcess = proc(apipath,
     {
       cwd: webAppFolder,
-      env: {'ASPNETCORE_URLS': `http://+:${port}`}
+      env: { 'ASPNETCORE_URLS': `http://+:${port}` }
     }
   );
 
   console.log(`webapp started`);
-  serverPort = port;
 
   webAppProcess.stdout.on('data', (data) => {
     console.log(`webapp: ${data}`);
 
-    if(data.includes('Application started. Press Ctrl+C to shut down.')) {
+    if (data.includes('Application started. Press Ctrl+C to shut down.')) {
       if (mainWindow != null) {
-        initializeConnection(serverPort);
+        initializeConnection(port);
       }
     }
   });
@@ -116,14 +115,14 @@ process.on('exit', function () {
   webAppProcess = null;
 });
 
-function initializeConnection(serverPort) 
-{
+function initializeConnection(serverPort) {
   webSocketConnect(`ws://localhost:${serverPort}/ws`);
 
   console.log('redirecting to web page');
+
   var indexPageUrl = url.format({
     hostname: 'localhost',
-    port: serverPort, 
+    port: serverPort,
     protocol: 'http'
   });
 
@@ -131,34 +130,34 @@ function initializeConnection(serverPort)
 }
 
 let ws;
-function webSocketConnect(url)
-{
+function webSocketConnect(url) {
   const WebSocket = require('ws');
-  
-   ws = new WebSocket(url, {
+
+  ws = new WebSocket(url, {
     perMessageDeflate: false
   });
 
   ws.on('open', function open() {
-    ws.send('Hello');
+    ws.send('Connection opened');
   });
 
   ws.on('close', function close(data) {
-    console.log('CLOOOOOOOOOSED: disconnected');
+    console.log('Connection closed');
   })
-    
-  
+
   ws.on('message', function incoming(data) {
     console.log('Received: ' + data);
-    
-    if(data == 'OpenDialog') {
-      console.log(dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}))
+
+    var electronAction = JSON.parse(data);
+
+    var electronModule;
+    if (electronAction.Module == 'mainWindow') {
+      electronModule = mainWindow;
     }
-    else if(data == 'Minimize') {
-      mainWindow.minimize();
+    else {
+      electronModule = electron[electronAction.Module];
     }
-    else if(data == 'Exit') {
-      mainWindow.close();
-    }
+
+    electronModule[electronAction.Method].apply(electronModule, electronAction.Arguments);
   });
 }

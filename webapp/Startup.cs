@@ -28,10 +28,14 @@ namespace WebApp
             {
                 options.AddDefaultTempStorages("Temp");
             });
-            services.AddSingleton<WebSocketHandler>();
             services.AddTransient<ElectronService>();
+            services.AddTransient<DialogModule>();
+            services.AddTransient<MainWindowModule>();
 
             services.AddTransient<DefaultViewModel>();
+            services.AddSingleton<ElectronMessageHandler>();
+            services.AddSingleton<WebSocketHandler, ElectronMessageHandler>(c => c.GetService<ElectronMessageHandler>());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +43,7 @@ namespace WebApp
         {
             app.UseWebSockets();
 
-            app.UseWebSocketHandler();
+            app.UseWebSocketHandler("/ws");
 
             // use DotVVM
             var dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(env.ContentRootPath);
