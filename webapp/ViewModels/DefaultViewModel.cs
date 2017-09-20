@@ -37,7 +37,7 @@ namespace WebApp.ViewModels
 
         public async Task ClipBoardWriteText()
         {
-            await _electronService.ClipBoard.WriteText("TEST");
+            await _electronService.ClipBoard.WriteTextAsync("TEST");
         }
 
         public async Task MinimizeWindow()
