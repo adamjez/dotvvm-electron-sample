@@ -9,13 +9,6 @@ using Newtonsoft.Json;
 
 namespace WebApp.Services
 {
-    public class ElectrontMessageHandler : WebSocketHandler
-    {
-        public override Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
-        {
-            return Task.CompletedTask;
-        }
-    }
 
     public abstract class WebSocketHandler
     {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotVVM.Framework.ViewModel;
 using WebApp.Services;
+using WebApp.Services.Modules;
 
 namespace WebApp.ViewModels
 {
@@ -24,7 +25,15 @@ namespace WebApp.ViewModels
 
         public async Task OpenDialogWindow()
         {
-            await _electronService.Dialog.ShowOpenDialogAsync();
+            // new { Properties = new[] { "openFile", "openDirectory", "multiSelections" } }
+            var options = new ShowOpenDialogOptions
+            {
+                Properties = new[] { "openFile", "multiSelections" },
+                Title = "Title Test",
+                Filters = new[] { new FileFilter { Name = "Image", Extensions = new[] { "jpg", "png", "gif" } } }
+            };
+
+            await _electronService.Dialog.ShowOpenDialogAsync(options);
         }
 
         public async Task MinimizeWindow()

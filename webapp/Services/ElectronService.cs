@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebApp.Services.Modules;
 
 namespace WebApp.Services
 {

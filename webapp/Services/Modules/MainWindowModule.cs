@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebApp.Services
+namespace WebApp.Services.Modules
 {
     public class MainWindowModule : ElectronModule
     {
@@ -16,18 +16,6 @@ namespace WebApp.Services
         public async Task MinimizeAsync()
         {
             await SendActionAsync();
-        }
-    }
-
-    public class DialogModule : ElectronModule
-    {
-        public DialogModule(ElectronMessageHandler handler) : base(handler)
-        {
-        }
-
-        public async Task ShowOpenDialogAsync()
-        {
-            await SendActionAsync(arguments: new { properties = new[] { "openFile", "openDirectory", "multiSelections" } });
         }
     }
 }

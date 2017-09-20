@@ -79,14 +79,17 @@ function startWebApp() {
 
 function spawnWebServer(port) {
   var proc = require('child_process').spawn;
-  //  run server
-  var webAppFolder = path.join(__dirname, '/webapp/bin/dist/win/');
-  var apipath = path.join(__dirname, '/webapp/bin/dist/win/webapp.exe')
-  console.log(apipath);
-  webAppProcess = proc(apipath,
+
+  var webAppFile = path.join(__dirname, '/webapp/bin/dist/webapp');
+
+  if(os.platform() == 'win32') {
+    webAppFile += '.exe';
+  }
+
+  webAppProcess = proc(webAppFile,
     {
-      cwd: webAppFolder,
-      env: { 'ASPNETCORE_URLS': `http://+:${port}` }
+      cwd: path.dirname(webAppFile),
+      env: { 'ASPNETCORE_URLS': `http://+:${port}` },
     }
   );
 
@@ -129,11 +132,10 @@ function initializeConnection(serverPort) {
   mainWindow.loadURL(indexPageUrl);
 }
 
-let ws;
 function webSocketConnect(url) {
   const WebSocket = require('ws');
 
-  ws = new WebSocket(url, {
+  var ws = new WebSocket(url, {
     perMessageDeflate: false
   });
 
@@ -151,13 +153,13 @@ function webSocketConnect(url) {
     var electronAction = JSON.parse(data);
 
     var electronModule;
-    if (electronAction.Module == 'mainWindow') {
+    if (electronAction.module == 'mainWindow') {
       electronModule = mainWindow;
     }
     else {
-      electronModule = electron[electronAction.Module];
+      electronModule = electron[electronAction.module];
     }
 
-    electronModule[electronAction.Method].apply(electronModule, electronAction.Arguments);
+    electronModule[electronAction.method].apply(electronModule, electronAction.arguments);
   });
 }

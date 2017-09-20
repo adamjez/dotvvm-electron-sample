@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WebApp.Helpers;
 
-namespace WebApp.Services
+namespace WebApp.Services.Modules
 {
     public abstract class ElectronModule
     {
