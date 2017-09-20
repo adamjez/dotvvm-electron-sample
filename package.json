@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/adamjez",
+  "repository": "https://github.com/adamjez/dotvvm-electron-sample",
   "keywords": [
     "Electron",
     "DotVVM",

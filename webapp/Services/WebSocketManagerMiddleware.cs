@@ -31,7 +31,7 @@ namespace WebApp.Services
             {
                 if(result.MessageType == WebSocketMessageType.Text)
                 {
-                    await _webSocketHandler.ReceiveAsync(socket, result, buffer);
+                    await _webSocketHandler.ReceiveAsync(result, buffer);
                     return;
                 }
 
@@ -40,7 +40,6 @@ namespace WebApp.Services
                     await _webSocketHandler.OnDisconnected(socket);
                     return;
                 }
-
             });
             
             //TODO - investigate the Kestrel exception thrown when this is the last middleware

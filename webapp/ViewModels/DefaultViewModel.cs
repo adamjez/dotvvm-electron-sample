@@ -25,7 +25,6 @@ namespace WebApp.ViewModels
 
         public async Task OpenDialogWindow()
         {
-            // new { Properties = new[] { "openFile", "openDirectory", "multiSelections" } }
             var options = new ShowOpenDialogOptions
             {
                 Properties = new[] { "openFile", "multiSelections" },

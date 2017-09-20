@@ -1,6 +1,4 @@
 const electron = require('electron')
-const { dialog } = require('electron')
-
 const os = require('os');
 
 // Module to control application life.
@@ -67,7 +65,7 @@ app.on('activate', function () {
 let webAppProcess;
 
 function startWebApp() {
-  var freeport = require('freeport');
+  const freeport = require('freeport');
 
   freeport(function (err, port) {
     if (err) throw err
@@ -114,8 +112,10 @@ function spawnWebServer(port) {
 //Kill process when electron exits
 process.on('exit', function () {
   console.log('killing webApp');
-  webAppProcess.kill();
-  webAppProcess = null;
+  if(webAppProcess) {
+    webAppProcess.kill();
+    webAppProcess = null;
+  }
 });
 
 function initializeConnection(serverPort) {

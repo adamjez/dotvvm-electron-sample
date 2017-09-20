@@ -24,7 +24,7 @@ namespace WebApp.Services
             await SendMessageAsync(serializedObject);
         }
 
-        public override Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
+        public override Task ReceiveAsync(WebSocketReceiveResult result, byte[] buffer)
         {
             return Task.CompletedTask;
         }
