@@ -37,6 +37,32 @@ namespace WebApp.ViewModels
             Title = string.Join(", ", await _electronService.Dialog.ShowOpenDialogAsync(options));
         }
 
+        public async Task SaveDialogWindow()
+        {
+            var options = new ShowSaveDialogOptions
+            {
+                Title = "TEST"
+            };
+            Title = await _electronService.Dialog.ShowSaveDialog(options);
+        }
+
+        public async Task ShowMessageBox()
+        {
+            var options = new ShowMessageBoxOptions{
+                Title = "TEST"
+            };
+            await _electronService.Dialog.ShowMessageBox(options);
+        }
+
+        public async Task ShowErrorBox()
+        {
+            var options = new ShowErrorBoxOptions{
+                Title = "Test",
+                Content  = "ERROR"
+            };
+            await _electronService.Dialog.ShowErrorBox(options);
+        }
+
         public async Task ClipBoardWriteText()
         {
             await _electronService.ClipBoard.WriteTextAsync("Test");

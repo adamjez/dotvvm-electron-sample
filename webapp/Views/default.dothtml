@@ -14,6 +14,9 @@
     <dot:RouteLink Text="Page 1" RouteName="Page1" />
 
     <dot:Button Text="Open Dialog" Click="{command: OpenDialogWindow()}" />
+    <dot:Button Text="Save Dialog" Click="{command: SaveDialogWindow()}" />
+    <dot:Button Text="Show MessageBox" Click="{command: ShowMessageBox()}" />
+    <dot:Button Text="Show ErrorBox" Click="{command: ShowErrorBox()}" />
     <dot:Button Text="Minimize" Click="{command: MinimizeWindow()}" />
     <dot:Button Text="Close" Click="{command: CloseWindow()}" />
     <dot:Button Text="ClipBoard WriteText" Click="{command: ClipBoardWriteText()}" />

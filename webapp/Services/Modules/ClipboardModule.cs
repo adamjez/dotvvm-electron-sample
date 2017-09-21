@@ -8,9 +8,6 @@ namespace WebApp.Services.Modules
 {
     public class ClipboardModule : ElectronModule
     {
-        public class A{
-
-        }
         public ClipboardModule(ElectronMessageHandler handler) : base(handler)
         {
         }
@@ -35,8 +32,6 @@ namespace WebApp.Services.Modules
             var result = await SendActionAsync();
             return result.ToObject<string>();
         }
-        
-
         public async Task WriteTextAsync(string text, string type = null)
         {
             await SendActionAsync(arguments: ParamHelpers.GetParams(text, type));
