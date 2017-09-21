@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace WebApp.Helpers
 {
@@ -6,7 +7,7 @@ namespace WebApp.Helpers
     {
         public static object[] GetParams(params object[] arguments)
         {
-            return arguments;
+            return arguments.Where (s => s != null).ToArray();
         }
     }
 }

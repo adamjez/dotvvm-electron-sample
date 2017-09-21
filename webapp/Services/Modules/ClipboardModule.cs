@@ -8,10 +8,10 @@ namespace WebApp.Services.Modules
         public ClipboardModule(ElectronMessageHandler handler) : base(handler)
         {
         }
-
-        public async Task ReadTextAsync(string type = null)
+        public async Task<string> ReadTextAsync(string type = null)
         {
-            await SendActionAsync(arguments: ParamHelpers.GetParams(type));
+            var result = await SendActionAsync();
+            return result.ToObject<string>();
         }
 
         public async Task WriteTextAsync(string text, string type = null)
@@ -19,18 +19,18 @@ namespace WebApp.Services.Modules
             await SendActionAsync(arguments: ParamHelpers.GetParams(text, type));
         }
 
-        public async Task ReadHtmlAsync(string type = null)
+        public async Task<string> ReadHtmlAsync(string type = null)
         {
-            await SendActionAsync(arguments: ParamHelpers.GetParams(type));
+            var result = await SendActionAsync(arguments: ParamHelpers.GetParams(type));
+            return result.ToObject<string>();
         }
-
 
         public async Task WriteHtmlAsync(string markup, string type = null)
         {
             await SendActionAsync(arguments: ParamHelpers.GetParams(markup, type));
         }
 
-        public async Task ReadBookmarksAsync()
+        public async Task ReadBookmarksAsync() // TODO return
         {
             await SendActionAsync();
         }
@@ -40,15 +40,20 @@ namespace WebApp.Services.Modules
             await SendActionAsync(arguments: ParamHelpers.GetParams(title, url, type));
         }
 
-        public async Task ReadRTFAsync(string type = null)
+        public async Task<string> ReadRTFAsync(string type = null)
         {
-            await SendActionAsync(arguments: ParamHelpers.GetParams(type));
+            var result = await SendActionAsync(arguments: ParamHelpers.GetParams(type));
+            return result.ToObject<string>();
         }
         public async Task WriteRTFAsync(string text, string type = null)
         {
             await SendActionAsync(arguments: ParamHelpers.GetParams(text, type));
         }
 
+        public async Task ClearAsync(string type = null)
+        {
+            await SendActionAsync(arguments: ParamHelpers.GetParams(type));
+        }
 
     }
 }

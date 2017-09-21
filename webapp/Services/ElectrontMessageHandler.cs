@@ -34,7 +34,7 @@ namespace WebApp.Services
         public override Task ReceiveAsync(WebSocketReceiveResult result, byte[] buffer)
         {
             var response = JsonConvert.DeserializeObject<ElectronResponse>(
-                System.Text.Encoding.UTF8.GetString(buffer)
+                System.Text.Encoding.UTF8.GetString(buffer, 0, result.Count)
             );
 
             ResponseReceived?.Invoke(this, response);
