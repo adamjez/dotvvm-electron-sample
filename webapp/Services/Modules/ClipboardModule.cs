@@ -1,18 +1,41 @@
+using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WebApp.Helpers;
+using WebApp.Services.Modules.Options;
 
 namespace WebApp.Services.Modules
 {
     public class ClipboardModule : ElectronModule
     {
+        public class A{
+
+        }
         public ClipboardModule(ElectronMessageHandler handler) : base(handler)
         {
+        }
+
+        public async Task<ReadBookmarkOptions> ReadBookmarkAsync()
+        {
+            var result = await SendActionAsync();
+            return result.ToObject<ReadBookmarkOptions>();
+        }
+
+        public async Task WriteBookMarkAsync(WriteBookmarkOptions options)
+        {
+            dynamic obj = options;
+            await WriteAsync(obj);
+        }
+        private async Task WriteAsync(dynamic obj)
+        {
+            await SendActionAsync("WriteAsync", obj);
         }
         public async Task<string> ReadTextAsync(string type = null)
         {
             var result = await SendActionAsync();
             return result.ToObject<string>();
         }
+        
 
         public async Task WriteTextAsync(string text, string type = null)
         {
@@ -28,16 +51,6 @@ namespace WebApp.Services.Modules
         public async Task WriteHtmlAsync(string markup, string type = null)
         {
             await SendActionAsync(arguments: ParamHelpers.GetParams(markup, type));
-        }
-
-        public async Task ReadBookmarksAsync() // TODO return
-        {
-            await SendActionAsync();
-        }
-
-        public async Task WriteBookmarkAsync(string title, string url, string type = null)
-        {
-            await SendActionAsync(arguments: ParamHelpers.GetParams(title, url, type));
         }
 
         public async Task<string> ReadRTFAsync(string type = null)

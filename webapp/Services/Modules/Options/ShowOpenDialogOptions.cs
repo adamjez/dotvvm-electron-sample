@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebApp.Services.Modules
+namespace WebApp.Services.Modules.Options
 {
     public class ShowOpenDialogOptions
     {

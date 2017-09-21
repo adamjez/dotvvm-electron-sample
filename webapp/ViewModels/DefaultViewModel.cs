@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DotVVM.Framework.ViewModel;
 using WebApp.Services;
 using WebApp.Services.Modules;
-using static WebApp.Services.Modules.ClipboardModule;
+using WebApp.Services.Modules.Options;
 
 namespace WebApp.ViewModels
 {
@@ -15,6 +15,7 @@ namespace WebApp.ViewModels
     {
         private ElectronService _electronService;
         public string ClipBoardReadTextProperty { get; set; }
+        public ReadBookmarkOptions ReadBookMarkOptions { get; set; }
         public DefaultViewModel(ElectronService electronService)
         {
             _electronService = electronService;
@@ -44,6 +45,21 @@ namespace WebApp.ViewModels
         public async Task ClipBoardReadText()
         {
             ClipBoardReadTextProperty = await _electronService.ClipBoard.ReadTextAsync();
+        }
+
+        public async Task ClipBoardWriteBookMark()
+        {
+            WriteBookmarkOptions obj = new WriteBookmarkOptions
+            {
+                Text = "test",
+                Bookmark = "as"
+            };
+            await _electronService.ClipBoard.WriteBookMarkAsync(obj);
+        }
+
+        public async Task ClipBoardReadBookMark()
+        {
+            ReadBookMarkOptions = await _electronService.ClipBoard.ReadBookmarkAsync();
         }
 
         public async Task MinimizeWindow()

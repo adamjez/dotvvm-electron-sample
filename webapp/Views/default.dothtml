@@ -18,6 +18,14 @@
     <dot:Button Text="Close" Click="{command: CloseWindow()}" />
     <dot:Button Text="ClipBoard WriteText" Click="{command: ClipBoardWriteText()}" />
     <dot:Button Text="ClipBoard ReadText" Click="{command: ClipBoardReadText()}" />
+    <dot:Button Text="ClipBOard WriteBookMark" Click="{command: ClipBoardWriteBookMark()}" />
+    <dot:Button Text="ClipBoard ReadBookMark" Click="{command: ClipBoardReadBookMark()}" />
     {{value:_root.ClipBoardReadTextProperty}}
+
+
+    <div>
+        BookMark {{value: ReadBookMarkOptions.Url}}
+        {{value: ReadBookMarkOptions.Title}}
+    </div>
 </body>
 </html>
