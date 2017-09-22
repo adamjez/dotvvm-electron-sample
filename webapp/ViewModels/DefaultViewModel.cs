@@ -37,6 +37,10 @@ namespace WebApp.ViewModels
             Title = string.Join(", ", await _electronService.Dialog.ShowOpenDialogAsync(options));
         }
 
+        public async Task BeforeQuit()
+        {
+            await _electronService.App.BeforeQuit();
+        }
         public async Task SaveDialogWindow()
         {
             var options = new ShowSaveDialogOptions
@@ -45,10 +49,24 @@ namespace WebApp.ViewModels
             };
             Title = await _electronService.Dialog.ShowSaveDialog(options);
         }
+        public async Task ShowItemInFolder()
+        {
+            var result = await _electronService.Shell.ShowItemInFolderAsync(@"C:\Users\Tomas\Desktop\Capture.PNG");
+        }
 
+        public async Task OpenItem()
+        {
+            var result = await _electronService.Shell.OpenItemAsync(@"C:\Users\Tomas\Desktop\Capture.PNG");
+        }
+
+        public async Task OpenExternal()
+        {
+            var result = await _electronService.Shell.OpenExternalAsync(@"https://electron.atom.io/docs/api/shell/");
+        }
         public async Task ShowMessageBox()
         {
-            var options = new ShowMessageBoxOptions{
+            var options = new ShowMessageBoxOptions
+            {
                 Title = "TEST"
             };
             await _electronService.Dialog.ShowMessageBox(options);
@@ -56,9 +74,10 @@ namespace WebApp.ViewModels
 
         public async Task ShowErrorBox()
         {
-            var options = new ShowErrorBoxOptions{
+            var options = new ShowErrorBoxOptions
+            {
                 Title = "Test",
-                Content  = "ERROR"
+                Content = "ERROR"
             };
             await _electronService.Dialog.ShowErrorBox(options);
         }

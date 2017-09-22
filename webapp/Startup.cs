@@ -31,6 +31,8 @@ namespace WebApp
             });
             services.AddTransient<ElectronService>();
             services.AddTransient<DialogModule>();
+            services.AddTransient<AppModule>();
+            services.AddTransient<ShellModule>();
             services.AddTransient<ClipboardModule>();
             services.AddTransient<MainWindowModule>();
 
@@ -49,7 +51,7 @@ namespace WebApp
 
             // use DotVVM
             var dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(env.ContentRootPath);
-            
+
             // use static files
             app.UseStaticFiles(new StaticFileOptions
             {
