@@ -150,27 +150,27 @@ function webSocketConnect(url) {
     console.log('Received: ' + data);
 
     var electronAction = JSON.parse(data);
-    if(electronAction.Type == 0){
-      var electronModule;
-      if (electronAction.module == 'mainWindow') {
-        electronModule = mainWindow;
-      }
-      else {
-        electronModule = electron[electronAction.module];
-      }
-  
-      var result = electronModule[electronAction.method].apply(electronModule, electronAction.arguments);
-  
-      var response = {
-        type: "Response", 
-        actionId: electronAction.id,
-        result: result
-      };
-      
-      console.log('Sending: ' + JSON.stringify(response));
-  
-      ws.send(JSON.stringify(response));
+
+    var electronModule;
+    if (electronAction.module == 'mainWindow') {
+      electronModule = mainWindow;
     }
-   
+    else {
+      electronModule = electron[electronAction.module];
+    }
+
+    var result = electronModule[electronAction.method].apply(electronModule, electronAction.arguments);
+
+    var response = {
+      type: "Response",
+      actionId: electronAction.id,
+      result: result
+    };
+
+    console.log('Sending: ' + JSON.stringify(response));
+
+    ws.send(JSON.stringify(response));
+
+
   });
 }
