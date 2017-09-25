@@ -10,3 +10,25 @@ For Visual Studio Code users:
 + Launch **Electron Main**
 
 Replace runtime identifier (RID) with your operating system RID. For list of RID check [documentation](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog).
+
+## Implemented API:
+* **[Clipboard](https://electron.atom.io/docs/api/clipboard/)**
+  * readText
+  * writeText
+  * readHTML
+  * writeHTML
+  * readRTF
+  * writeRTP
+  * readBookmark
+  * writeBookmark
+  * clear
+* **[Dialog](https://electron.atom.io/docs/api/dialog/)**
+  * showOpenDialog
+  * showSaveDialog
+  * showMessageBox
+  * showErrorBox
+* **[Shell](https://electron.atom.io/docs/api/shell/)**
+  * showItemInFolder
+  * openItem
+  * openExternal
+  * moveItemToTrash

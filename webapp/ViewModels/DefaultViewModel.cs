@@ -63,6 +63,7 @@ namespace WebApp.ViewModels
         {
             var result = await _electronService.Shell.OpenExternalAsync(@"https://electron.atom.io/docs/api/shell/");
         }
+
         public async Task ShowMessageBox()
         {
             var options = new ShowMessageBoxOptions

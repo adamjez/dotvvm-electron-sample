@@ -12,8 +12,6 @@ namespace WebApp.Services.Modules
         {
         }
 
-
-
         public async Task BeforeQuit()
         {
             await SendEventAsync();

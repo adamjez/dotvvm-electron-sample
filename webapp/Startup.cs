@@ -33,6 +33,7 @@ namespace WebApp
             services.AddTransient<DialogModule>();
             services.AddTransient<AppModule>();
             services.AddTransient<ShellModule>();
+             services.AddTransient<MenuModule>();
             services.AddTransient<ClipboardModule>();
             services.AddTransient<MainWindowModule>();
 
