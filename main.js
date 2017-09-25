@@ -150,6 +150,7 @@ function webSocketConnect(url) {
     console.log('Received: ' + data);
 
     var electronAction = JSON.parse(data);
+    /* Method */
     if (electronAction.type == 0) {
       var electronModule;
       if (electronAction.module == 'mainWindow') {
@@ -172,8 +173,8 @@ function webSocketConnect(url) {
       ws.send(JSON.stringify(response));
 
     }
+    /* Event */
     else if (electronAction.type == 1) {
-      
       if (electronAction.module == "app") {
         app.on(electronAction.method, (event) => {
           var response = {

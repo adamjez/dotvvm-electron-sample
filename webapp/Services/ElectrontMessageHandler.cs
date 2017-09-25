@@ -54,7 +54,7 @@ namespace WebApp.Services
                     tcs.SetResult(response);
                 }    
             };
-
+           
             // will get raised, when the work is done
             ResponseReceived += handler;
 
