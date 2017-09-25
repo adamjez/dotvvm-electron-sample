@@ -17,7 +17,8 @@
     <dot:Button Text="Save Dialog" Click="{command: SaveDialogWindow()}" />
     <dot:Button Text="Show MessageBox" Click="{command: ShowMessageBox()}" />
     <dot:Button Text="Show ErrorBox" Click="{command: ShowErrorBox()}" />
-    <dot:Button Text="Register event before quit" Click="{command: BeforeQuit()}" />
+    <dot:Button Text="Event before quit" Click="{command: BeforeQuit()}" />
+    <dot:Button Text="Event browser window focus" Click="{command: BrowserWindowFocus()}" />
     <dot:Button Text="Show item in folder" Click="{command: ShowItemInFolder()}" />
     <dot:Button Text="Open item" Click="{command: OpenItem()}" />
     <dot:Button Text="Open external" Click="{command: OpenExternal()}" />

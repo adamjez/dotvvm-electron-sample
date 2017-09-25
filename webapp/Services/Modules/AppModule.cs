@@ -14,7 +14,12 @@ namespace WebApp.Services.Modules
 
         public async Task BeforeQuit()
         {
-            await SendEventAsync();
+            var result = await SendEventAsync(usePreventDefault: true);
+        }
+
+        public async Task BrowserWindowFocus()
+        {
+            var result = await SendEventAsync();
         }
      
     }

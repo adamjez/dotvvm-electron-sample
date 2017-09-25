@@ -36,10 +36,13 @@ namespace WebApp.ViewModels
 
             Title = string.Join(", ", await _electronService.Dialog.ShowOpenDialogAsync(options));
         }
-
         public async Task BeforeQuit()
         {
             await _electronService.App.BeforeQuit();
+        }
+        public async Task BrowserWindowFocus()
+        {
+            await _electronService.App.BrowserWindowFocus();
         }
         public async Task SaveDialogWindow()
         {

@@ -48,7 +48,7 @@ namespace WebApp.Services
             EventHandler<ElectronResponse> handler = null;
             handler = (s, response) =>
             {
-                if(response.Type == ElectronResponseType.Response && id == response.ActionId)
+                if((response.Type == ElectronResponseType.Response || response.Type == ElectronResponseType.Event) && id == response.ActionId)
                 {
                     ResponseReceived -= handler;
                     tcs.SetResult(response);
