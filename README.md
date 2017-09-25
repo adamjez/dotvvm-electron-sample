@@ -14,7 +14,7 @@ Replace runtime identifier (RID) with your operating system RID. For list of RID
 ## Implemented API:
 **Methods**
 * **[Clipboard](https://electron.atom.io/docs/api/clipboard/)**
-  * Methods
+  * **Methods**
     * readText
     * writeText
     * readHTML
@@ -25,21 +25,20 @@ Replace runtime identifier (RID) with your operating system RID. For list of RID
     * writeBookmark
     * clear
 * **[Dialog](https://electron.atom.io/docs/api/dialog/)**
-  * Methods
+  * **Methods**
     * showOpenDialog
     * showSaveDialog
     * showMessageBox
     * showErrorBox
 * **[Shell](https://electron.atom.io/docs/api/shell/)**
-  * Methods
-  
-  * showItemInFolder
-  * openItem
-  * openExternal
-  * moveItemToTrash
-
-**Events**
+  * **Methods**
+    * showItemInFolder
+    * openItem
+    * openExternal
+    * moveItemToTrash
 * **[App](https://electron.atom.io/docs/api/app/)**
-  * before-quit
-  * browser-window-focus
+  * **Events**
+    * before-quit
+    * browser-window-focus
+
     
