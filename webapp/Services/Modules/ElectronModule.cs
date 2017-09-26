@@ -36,7 +36,7 @@ namespace WebApp.Services.Modules
             return response.Result;
         }
 
-        protected async Task<JToken> SendEventAsync([CallerMemberName] string methodName = null, bool usePreventDefault = false)
+        protected async Task SendEventAsync([CallerMemberName] string methodName = null, bool usePreventDefault = false)
         {
             ThrowExceptionWhenMethodNameIsNull(methodName);
 
@@ -50,8 +50,7 @@ namespace WebApp.Services.Modules
                 Type = ElectronRequestType.Event,
                 UsePreventDefault = usePreventDefault
             };
-            var response = await _handler.SendActionAsync(action);
-            return response.Result;
+            await _handler.SendActionAsync(action);
         }
 
         private static void ThrowExceptionWhenMethodNameIsNull(string methodName)

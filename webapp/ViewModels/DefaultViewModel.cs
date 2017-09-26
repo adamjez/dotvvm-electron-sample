@@ -42,7 +42,12 @@ namespace WebApp.ViewModels
         }
         public async Task BrowserWindowFocus()
         {
-            await _electronService.App.BrowserWindowFocus();
+            await _electronService.App.BrowserWindowFocus(Test);
+        }
+
+        public void Test()
+        {
+
         }
         public async Task SaveDialogWindow()
         {

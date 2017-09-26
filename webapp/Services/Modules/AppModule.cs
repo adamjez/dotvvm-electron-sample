@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApp.Helpers;
@@ -12,14 +13,16 @@ namespace WebApp.Services.Modules
         {
         }
 
-        public async Task BeforeQuit()
+        public async Task BeforeQuit(Action eventAction = null)
         {
-            var result = await SendEventAsync(usePreventDefault: true);
+            await SendEventAsync(usePreventDefault: true);
+            eventAction?.Invoke();
         }
 
-        public async Task BrowserWindowFocus()
+        public async Task BrowserWindowFocus(Action eventAction = null)
         {
-            var result = await SendEventAsync();
+            await SendEventAsync();
+            eventAction?.Invoke();
         }
      
     }
